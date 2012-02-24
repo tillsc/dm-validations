@@ -119,6 +119,8 @@ module DataMapper
         self.validators.contexts.each do |context, validators|
           validators.each do |v|
             options = v.options.merge(:context => context)
+            options.merge!(:if => v.if_clause) if v.is_a?(DataMapper::Validations::GenericValidator) && v.if_clause
+            options.merge!(:unless => v.unless_clause) if v.is_a?(DataMapper::Validations::GenericValidator) && v.unless_clause
             base.validators.add(v.class, v.field_name, options)
           end
         end
