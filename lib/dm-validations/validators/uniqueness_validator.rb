@@ -43,7 +43,7 @@ module DataMapper
         }
 
         resource = DataMapper.repository(target.repository.name) do
-          target.model.first(opts)
+          target.model.base_model.first(opts)
         end
 
         return true if resource.nil?
