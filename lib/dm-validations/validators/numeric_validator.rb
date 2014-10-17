@@ -78,7 +78,7 @@ module DataMapper
       end
 
       def validate_integer(value, errors)
-        validate_with_comparison(value_as_string(value), :=~, /\A[+-]?\d+\z/, :not_an_integer, errors)
+        validate_with_comparison(value_as_string(value), :=~, /\A[+-]?[1-9]\d+\z/, :not_an_integer, errors)
       end
 
       def validate_numeric(value, errors)
