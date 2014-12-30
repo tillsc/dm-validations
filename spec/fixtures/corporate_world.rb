@@ -17,9 +17,15 @@ module DataMapper
         include DataMapper::Resource
 
         property :id, Serial
+
+        property :type, Discriminator
+
         property :name, String, :unique_index => true
 
         validates_uniqueness_of :name
+      end
+
+      class SpecialDepartment < Department
       end
 
       class User

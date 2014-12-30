@@ -28,6 +28,23 @@ describe 'uniqueness_validator/uniqueness_validator_spec' do
     end
   end
 
+  describe 'DataMapper::Validations::Fixtures::SpecialDepartment' do
+    before :all do
+      DataMapper::Validations::Fixtures::Department.destroy!
+      DataMapper::Validations::Fixtures::SpecialDepartment.destroy!
+
+      DataMapper::Validations::Fixtures::Department.create(:name => "HR").should be_saved
+    end
+
+    describe "with a duplicate name" do
+      before do
+        @model = DataMapper::Validations::Fixtures::SpecialDepartment.new(:name => "HR")
+      end
+
+      it_should_behave_like "invalid model"
+    end
+  end
+
   describe 'DataMapper::Validations::Fixtures::Organisation' do
     before :all do
       DataMapper::Validations::Fixtures::Organisation.destroy!
