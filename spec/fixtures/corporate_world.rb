@@ -26,6 +26,13 @@ module DataMapper
       end
 
       class SpecialDepartment < Department
+        property :special_id, String
+        validates_uniqueness_of :special_id
+      end
+
+      class VerySpecialDepartment < Department
+        property :special_id, String
+        validates_uniqueness_of :special_id
       end
 
       class User

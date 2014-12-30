@@ -31,7 +31,6 @@ describe 'uniqueness_validator/uniqueness_validator_spec' do
   describe 'DataMapper::Validations::Fixtures::SpecialDepartment' do
     before :all do
       DataMapper::Validations::Fixtures::Department.destroy!
-      DataMapper::Validations::Fixtures::SpecialDepartment.destroy!
 
       DataMapper::Validations::Fixtures::Department.create(:name => "HR").should be_saved
     end
@@ -42,6 +41,38 @@ describe 'uniqueness_validator/uniqueness_validator_spec' do
       end
 
       it_should_behave_like "invalid model"
+    end
+  end
+
+  describe 'DataMapper::Validations::Fixtures::SpecialDepartment' do
+    before :all do
+      DataMapper::Validations::Fixtures::Department.destroy!
+
+      DataMapper::Validations::Fixtures::SpecialDepartment.create(:name => "HR", :special_id => "1234").should be_saved
+    end
+
+    describe "with a duplicate special_id" do
+      before do
+        @model = DataMapper::Validations::Fixtures::SpecialDepartment.new(:name => "Other Dept.", :special_id => "1234")
+      end
+
+      it_should_behave_like "invalid model"
+    end
+  end
+
+  describe 'DataMapper::Validations::Fixtures::VerySpecialDepartment' do
+    before :all do
+      DataMapper::Validations::Fixtures::Department.destroy!
+
+      DataMapper::Validations::Fixtures::SpecialDepartment.create(:name => "HR", :special_id => "1234").should be_saved
+    end
+
+    describe "with a special_id also used by a SpecialDepartment" do
+      before do
+        @model = DataMapper::Validations::Fixtures::VerySpecialDepartment.new(:name => "Some Very Special Other Dept.", :special_id => "1234")
+      end
+
+      it_should_behave_like "valid model"
     end
   end
 
