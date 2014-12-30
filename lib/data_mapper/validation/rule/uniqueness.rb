@@ -46,7 +46,7 @@ module DataMapper
             opts[subject] = resource.__send__(subject)
           }
 
-          property = resource.model.properties[field_name]
+          property = resource.model.properties[attribute_name]
           other_resource = DataMapper.repository(resource.repository.name) do
             property.model.first(opts)
           end
